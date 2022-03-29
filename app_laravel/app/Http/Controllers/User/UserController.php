@@ -54,13 +54,8 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            if (Auth::user()->id == $user->id) {
-                $user->fill($request->all());
-                $user->save();
-            } else {
-                $message = 'You don\'t have authorization to do this action';
-                return response()->json(['data' => $message], 403);
-            }
+            $user->fill($request->all());
+            $user->save();
 
             DB::commit();
 
@@ -83,15 +78,8 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $message = '';
-
-            if (Auth::user()->id == $user->id) {
-                $user->delete();
-                $message = 'You have successfully deleted the user';
-            } else {
-                $message = 'You don\'t have authorization to do this action';
-                return response()->json(['data' => $message], 403);
-            }
+            $user->delete();
+            $message = 'You have successfully deleted the user';
 
             DB::commit();
 

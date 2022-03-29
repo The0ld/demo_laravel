@@ -22,11 +22,12 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->middleware('auth:api')->group(function () {
     Route::prefix('oauth')->namespace('Auth')->group(function () {
-        Route::get('/logout/{user}', 'AuthController@logout');
+        Route::get('/logout/{user}', 'AuthController@logout')->middleware(['user.valid:{user}']);
     });
 
     Route::namespace('User')->group(function () {
-        Route::apiResource('user', 'UserController')->except(['store']);
+        Route::apiResource('user', 'UserController')->except(['store', 'index'])->middleware(['user.valid:{user}']);
+        Route::apiResource('user', 'UserController')->only(['index']);
     });
 
     Route::prefix('delivery')->namespace('Delivery')->group(function () {

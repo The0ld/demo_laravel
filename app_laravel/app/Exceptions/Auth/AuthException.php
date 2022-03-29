@@ -6,6 +6,7 @@ use Exception;
 
 class AuthException extends Exception
 {
+    const NO_VALID = "You don't have authorization to do this action";
     const INCORRECT_DATA = "Wrong email or password";
 
     private $mensaje;

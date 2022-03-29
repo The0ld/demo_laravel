@@ -47,9 +47,7 @@ class AuthController extends Controller
     public function logout(User $user)
     {
         try {
-
-            if (Auth::user()->id == $user->id)
-                $user->OauthAcessToken()->delete();
+            $user->OauthAcessToken()->delete();
 
             return response()->json(['data' => 'You have successfully logged out'], 200);
         } catch (\Exception $e) {
