@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  backend_demo:
+    build: ./docker
+    image: demo_laravel:0.0.1
+    container_name: demo_laravel
+    restart: unless-stopped
+    volumes:
+      - ./app_laravel:/var/www/demo/api
+    ports:
+      - 8000:80
+    networks:
+      - net-demo
+    working_dir: /var/www/demo/api
+    depends_on:
+      - db_demo
+      - redis_demo
+  db_demo:
+    image: mysql
+    container_name: db_demo_laravel
+    restart: unless-stopped
+    volumes:
+      - dbdata_demo:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=demo_laravel
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - 3307:3306
+    networks:
+      - net-demo
+  redis_demo:
+    image: redis
+    container_name: redis_demo_laravel
+    restart: unless-stopped
+    ports:
+      - 6380:6379
+    networks:
+      - net-demo
+volumes:
+  dbdata_demo:
+networks:
+  net-demo:
