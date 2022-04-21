@@ -6,7 +6,7 @@ services:
     container_name: demo_laravel
     restart: unless-stopped
     volumes:
-      - ./app_laravel:/var/www/demo/api
+      - ./app_laravel:/var/www/demo/api:rw
     ports:
       - 8000:80
     networks:
